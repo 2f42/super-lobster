@@ -34,6 +34,17 @@ class Direction(Enum):
 	LEFT = 2
 	UP = 3
 
+	@staticmethod
+	def as_point(direction: Direction) -> Point:
+		if direction is Direction.RIGHT:
+			return Point(1, 0)
+		elif direction is Direction.DOWN:
+			return Point(0, 1)
+		elif direction is Direction.LEFT:
+			return Point(-1, 0)
+		elif direction is Direction.UP:
+			return Point(0, -1)
+
 	def __add__(self, other: int) -> Direction:
 		if isinstance(other, int):
 			return Direction((self.value + other) % 4)
@@ -49,10 +60,13 @@ class Lobster:
 
 	id_iter = itertools.count()
 
-	def __init__(self, pos=Point(), dir=Direction.RIGHT) -> Lobster:
+	def __init__(self, position=Point(), direction=Direction.RIGHT) -> Lobster:
 		self.id = next(Lobster.id_iter)
-		self.position = pos
-		self.direction = dir
+		self.position = position
+		self.direction = direction
 
 	def __repr__(self) -> str:
 		return f"<Lobster {self.id} at {self.position} facing {self.direction.name}>"
+
+	def step(self) -> None:
+		self.position += Direction.as_point(self.direction)
