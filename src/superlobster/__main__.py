@@ -1,1 +1,1 @@
-from .interpreter import *
+print("hi")
