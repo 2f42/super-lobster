@@ -11,6 +11,17 @@ class Point(NamedTuple):
 	x: int = 0
 	y: int = 0
 
+	@classmethod
+	def from_direction(cls, direction: Direction) -> Point:
+		if direction is Direction.EAST:
+			return cls(1, 0)
+		elif direction is Direction.SOUTH:
+			return cls(0, 1)
+		elif direction is Direction.WEST:
+			return cls(-1, 0)
+		elif direction is Direction.NORTH:
+			return cls(0, -1)
+
 	def __add__(self, other: object) -> Point:
 		if isinstance(other, Point):
 			_x, _y = self
@@ -29,21 +40,10 @@ class Point(NamedTuple):
 @unique
 class Direction(Enum):
 
-	RIGHT = 0
-	DOWN = 1
-	LEFT = 2
-	UP = 3
-
-	@staticmethod
-	def as_point(direction: Direction) -> Point:
-		if direction is Direction.RIGHT:
-			return Point(1, 0)
-		elif direction is Direction.DOWN:
-			return Point(0, 1)
-		elif direction is Direction.LEFT:
-			return Point(-1, 0)
-		elif direction is Direction.UP:
-			return Point(0, -1)
+	EAST = 0
+	SOUTH = 1
+	WEST = 2
+	NORTH = 3
 
 	def __add__(self, other: int) -> Direction:
 		if isinstance(other, int):
@@ -69,4 +69,4 @@ class Lobster:
 		return f"<Lobster {self.id} at {self.position} facing {self.direction.name}>"
 
 	def step(self) -> None:
-		self.position += Direction.as_point(self.direction)
+		self.position += Point.from_direction(self.direction)
