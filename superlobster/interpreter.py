@@ -71,7 +71,7 @@ class Lobster:
 
     id_iter = itertools.count()
 
-    def __init__(self, position=Point(), direction=Direction.EAST) -> Lobster:
+    def __init__(self, position=Point(), direction=Direction.EAST) -> None:
         self.id = next(Lobster.id_iter)
         self.position = position
         self.direction = direction
@@ -79,5 +79,8 @@ class Lobster:
     def __repr__(self) -> str:
         return f"<Lobster {self.id} at {self.position} facing {self.direction.name}>"
 
-    def step(self) -> None:
-        self.position += Point.from_direction(self.direction)
+    def step(self, steps: int = 1) -> None:
+        self.position += Point.from_direction(self.direction) * steps
+
+    def turn(self, steps: int) -> None:
+        self.direction += steps
