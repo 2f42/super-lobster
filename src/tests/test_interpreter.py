@@ -1,6 +1,7 @@
 import superlobster.interpreter as sl
 from unittest import TestCase
 
+
 class TestPoint(TestCase):
 
     def test_creation(self):
@@ -44,14 +45,13 @@ class TestPoint(TestCase):
         self.assertEqual(c, sl.Point(4, 6))
 
         with self.assertRaises(TypeError):
-            d = a + 3
+            a + 3
         with self.assertRaises(TypeError):
-            d = a + "a"
+            a + "a"
 
         b += sl.Point(1, 1)
         self.assertIsInstance(b, sl.Point)
         self.assertEqual(b, sl.Point(4, 5))
-
 
     def test_subtraction(self):
         a = sl.Point(1, 2)
@@ -69,4 +69,3 @@ class TestPoint(TestCase):
         b -= sl.Point(1, 1)
         self.assertIsInstance(b, sl.Point)
         self.assertEqual(b, sl.Point(2, 3))
-

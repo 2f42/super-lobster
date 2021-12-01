@@ -71,4 +71,3 @@ class Lobster:
 
     def step(self) -> None:
         self.position += Point.from_direction(self.direction)
-
