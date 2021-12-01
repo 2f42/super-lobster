@@ -37,6 +37,16 @@ class Point:
             return Point(_x - x, _y - y)
         return NotImplemented
 
+    def __mul__(self, other: object) -> Point:
+        if isinstance(other, int):
+            _x, _y = astuple(self)
+            return Point(_x * other, _y * other)
+        if isinstance(other, Point):
+            _x, _y = astuple(self)
+            x, y = astuple(other)
+            return Point(_x * x, _y * y)
+        return NotImplemented
+
 
 @unique
 class Direction(Enum):

@@ -70,6 +70,27 @@ class TestPoint(TestCase):
         self.assertIsInstance(b, sl.Point)
         self.assertEqual(b, sl.Point(2, 3))
 
+    def test_multiplication(self):
+        a = sl.Point(1, 2)
+        b = sl.Point(3, 4)
+
+        c = a * 3
+        self.assertIsInstance(c, sl.Point)
+        self.assertEqual(c, sl.Point(3, 6))
+
+        d = a * b
+        self.assertIsInstance(d, sl.Point)
+        self.assertEqual(d, sl.Point(3, 8))
+
+        with self.assertRaises(TypeError):
+            a * .3
+        with self.assertRaises(TypeError):
+            a * "a"
+
+        b *= 4
+        self.assertIsInstance(b, sl.Point)
+        self.assertEqual(b, sl.Point(12, 16))
+
 
 class TestDirection(TestCase):
 
