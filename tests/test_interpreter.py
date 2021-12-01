@@ -115,6 +115,8 @@ class TestDirection(TestCase):
         self.assertIs(d, sl.Direction.EAST)
         d -= 1
         self.assertIs(d, sl.Direction.NORTH)
+        d -= 31
+        self.assertIs(d, sl.Direction.EAST)
 
     def test_conversion_to_point(self):
         d = sl.Direction.EAST
