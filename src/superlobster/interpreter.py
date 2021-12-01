@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import itertools
 
-from typing import NamedTuple
+from dataclasses import dataclass, astuple
 from enum import Enum, unique
 
 
-class Point(NamedTuple):
+@dataclass(frozen=True)
+class Point:
 
 	x: int = 0
 	y: int = 0
@@ -24,15 +25,15 @@ class Point(NamedTuple):
 
 	def __add__(self, other: object) -> Point:
 		if isinstance(other, Point):
-			_x, _y = self
-			x, y = other
+			_x, _y = astuple(self)
+			x, y = astuple(other)
 			return Point(_x + x, _y + y)
 		return NotImplemented
 
 	def __sub__(self, other: object) -> Point:
 		if isinstance(other, Point):
-			_x, _y = self
-			x, y = other
+			_x, _y = astuple(self)
+			x, y = astuple(other)
 			return Point(_x - x, _y - y)
 		return NotImplemented
 
@@ -60,7 +61,7 @@ class Lobster:
 
 	id_iter = itertools.count()
 
-	def __init__(self, position=Point(), direction=Direction.RIGHT) -> Lobster:
+	def __init__(self, position=Point(), direction=Direction.EAST) -> Lobster:
 		self.id = next(Lobster.id_iter)
 		self.position = position
 		self.direction = direction
