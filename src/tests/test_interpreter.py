@@ -69,3 +69,38 @@ class TestPoint(TestCase):
         b -= sl.Point(1, 1)
         self.assertIsInstance(b, sl.Point)
         self.assertEqual(b, sl.Point(2, 3))
+
+
+class TestDirection(TestCase):
+
+    def test_direction(self):
+        d = sl.Direction.EAST
+        self.assertIsInstance(d, sl.Direction)
+        self.assertIs(d, sl.Direction.EAST)
+
+    def test_immutability(self):
+        d = sl.Direction.EAST
+        with self.assertRaises(AttributeError):
+            d.value = 3
+        self.assertIs(d, sl.Direction.EAST)
+
+    def test_turning(self):
+        d = sl.Direction.EAST
+        d += 1
+        self.assertIs(d, sl.Direction.SOUTH)
+        d += 4
+        self.assertIs(d, sl.Direction.SOUTH)
+        d += 31
+        self.assertIs(d, sl.Direction.EAST)
+        d -= 1
+        self.assertIs(d, sl.Direction.NORTH)
+
+    def test_conversion_to_point(self):
+        d = sl.Direction.EAST
+        self.assertEqual(sl.Point.from_direction(d), sl.Point(1, 0))
+        d += 1
+        self.assertEqual(sl.Point.from_direction(d), sl.Point(0, 1))
+        d += 1
+        self.assertEqual(sl.Point.from_direction(d), sl.Point(-1, 0))
+        d += 1
+        self.assertEqual(sl.Point.from_direction(d), sl.Point(0, -1))
