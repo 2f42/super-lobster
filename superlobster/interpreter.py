@@ -6,7 +6,7 @@ from dataclasses import dataclass, astuple
 from enum import Enum, unique
 
 
-@dataclass(frozen=True)
+@dataclass(frozen=True, eq=True)
 class Point:
 
     x: int = 0
