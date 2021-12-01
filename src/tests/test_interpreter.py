@@ -62,9 +62,9 @@ class TestPoint(TestCase):
         self.assertEqual(c, sl.Point(2, 2))
 
         with self.assertRaises(TypeError):
-            d = a - 3
+            a - 3
         with self.assertRaises(TypeError):
-            d = a - "a"
+            a - "a"
 
         b -= sl.Point(1, 1)
         self.assertIsInstance(b, sl.Point)
