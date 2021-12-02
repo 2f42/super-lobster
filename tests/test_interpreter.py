@@ -55,4 +55,3 @@ class TestLobster(TestCase):
         self.assertEqual(barry.position, sl.Point(3, 6))
         barry.step(2)
         self.assertEqual(barry.position, sl.Point(3, 1))
-
