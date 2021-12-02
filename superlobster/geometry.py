@@ -4,6 +4,25 @@ from dataclasses import dataclass, astuple
 from enum import Enum, unique
 
 
+@unique
+class Direction(Enum):
+
+    EAST = 0
+    SOUTH = 1
+    WEST = 2
+    NORTH = 3
+
+    def __add__(self, other: int) -> Direction:
+        if isinstance(other, int):
+            return Direction((self.value + other) % 4)
+        return NotImplemented
+
+    def __sub__(self, other: int) -> Direction:
+        if isinstance(other, int):
+            return Direction((self.value - other) % 4)
+        return NotImplemented
+
+
 @dataclass(frozen=True, eq=True)
 class Point:
 
@@ -43,23 +62,4 @@ class Point:
             _x, _y = astuple(self)
             x, y = astuple(other)
             return Point(_x * x, _y * y)
-        return NotImplemented
-
-
-@unique
-class Direction(Enum):
-
-    EAST = 0
-    SOUTH = 1
-    WEST = 2
-    NORTH = 3
-
-    def __add__(self, other: int) -> Direction:
-        if isinstance(other, int):
-            return Direction((self.value + other) % 4)
-        return NotImplemented
-
-    def __sub__(self, other: int) -> Direction:
-        if isinstance(other, int):
-            return Direction((self.value - other) % 4)
         return NotImplemented
