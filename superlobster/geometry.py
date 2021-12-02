@@ -63,3 +63,20 @@ class Point:
             x, y = astuple(other)
             return Point(_x * x, _y * y)
         return NotImplemented
+
+
+@dataclass(frozen=True)
+class Domain:
+
+    def transform(self, point: Point) -> Point:
+        return point
+
+
+@dataclass(frozen=True)
+class ClosedDomain(Domain):
+
+    width: int
+    height: int
+
+    def transform(self, point: Point) -> Point:
+        return Point(point.x % self.width, point.y % self.height)
