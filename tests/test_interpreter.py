@@ -55,3 +55,18 @@ class TestLobster(TestCase):
         self.assertEqual(barry.position, sl.Point(3, 6))
         barry.step(2)
         self.assertEqual(barry.position, sl.Point(3, 1))
+
+    def test_cloning(self):
+        barry = sl.Lobster(sl.Point(3, 4), sl.Direction.SOUTH, sl.ClosedDomain(5, 7))
+
+        barry2 = barry.clone()
+        self.assertIsNot(barry, barry2)
+        self.assertEqual(barry2.position, sl.Point(2, 4))
+        self.assertIs(barry2.direction, sl.Direction.SOUTH)
+        self.assertIs(barry.domain, barry2.domain)
+
+        barry3 = barry.clone(barry.direction - 1, sl.Direction.NORTH)
+        self.assertIsNot(barry, barry3)
+        self.assertEqual(barry3.position, sl.Point(4, 4))
+        self.assertIs(barry3.direction, sl.Direction.NORTH)
+        self.assertIs(barry.domain, barry3.domain)
