@@ -24,3 +24,11 @@ class Lobster:
 
     def turn(self, steps: int) -> None:
         self.direction += steps
+
+    def clone(self, where=None, facing=None):
+        if where is None:
+            where = self.direction + 1  # on the current lobster's right
+        if facing is None:
+            facing = self.direction
+        new_pos = self.position + Point.from_direction(where)
+        return self.__class__(new_pos, facing, self.domain)
