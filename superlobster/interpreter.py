@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import itertools
 
-from .geometry import Point, Direction, Domain
+from .geometry import Point, Direction, Domain, ClosedDomain
 
 
 class Lobster:
@@ -11,7 +11,7 @@ class Lobster:
 
     def __init__(self, position=Point(), direction=Direction.EAST, domain=Domain()) -> None:
         self.id = next(Lobster.id_iter)
-        self.position = position
+        self.position = domain.transform(position)
         self.direction = direction
         self.domain = domain
 
