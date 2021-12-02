@@ -127,3 +127,52 @@ class TestDirection(TestCase):
         self.assertEqual(g.Point.from_direction(d), g.Point(-1, 0))
         d += 1
         self.assertEqual(g.Point.from_direction(d), g.Point(0, -1))
+
+
+class TestDomain(TestCase):
+
+    def test_creation(self):
+        d = g.Domain()
+        self.assertIsInstance(d, g.Domain)
+
+    def test_immutability(self):
+        d = g.Domain()
+        with self.assertRaises(AttributeError):
+            d.some_attribute = "hi"
+
+    def test_transform(self):
+        d = g.Domain()
+        p = g.Point(3, 4)
+        q = d.transform(p)
+        self.assertEqual(p, q)
+
+
+class TestClosedDomain(TestCase):
+
+    def test_creation(self):
+        d = g.ClosedDomain(10, 15)
+        self.assertIsInstance(d, g.ClosedDomain)
+        self.assertEqual(d.width, 10)
+        self.assertEqual(d.height, 15)
+
+    def test_immutability(self):
+        d = g.ClosedDomain(10, 15)
+        with self.assertRaises(AttributeError):
+            d.width = 10
+
+    def test_transform(self):
+        d = g.ClosedDomain(10, 15)
+        p = g.Point(3, 4)
+
+        q = d.transform(p)
+        self.assertEqual(q, g.Point(3, 4))
+
+        p += g.Point(7, 11)
+        q = d.transform(p)
+        self.assertEqual(p, g.Point(10, 15))
+        self.assertEqual(q, g.Point(0, 0))
+
+        p -= g.Point(11, 16)
+        q = d.transform(p)
+        self.assertEqual(p, g.Point(-1, -1))
+        self.assertEqual(q, g.Point(9, 14))
