@@ -94,7 +94,7 @@ class TestPoint(TestCase):
 
 class TestDirection(TestCase):
 
-    def test_direction(self):
+    def test_creation(self):
         d = g.Direction.EAST
         self.assertIsInstance(d, g.Direction)
         self.assertIs(d, g.Direction.EAST)
