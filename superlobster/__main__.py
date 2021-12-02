@@ -1,7 +1,5 @@
 from argparse import ArgumentParser
 
-from .interpreter import *
-
 
 def main():
     parser = ArgumentParser(
