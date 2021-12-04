@@ -9,11 +9,13 @@ class Lobster:
 
     id_iter = itertools.count()
 
-    def __init__(self, position=Point(), direction=Direction.EAST, domain=Domain()) -> None:
+    def __init__(self, position=Point(), direction=Direction.EAST, domain=Domain(), pointer=Point()) -> None:
         self.id = next(Lobster.id_iter)
         self.position = domain.transform(position)
         self.direction = direction
         self.domain = domain
+        self.stack = []
+        self.pointer = domain.transform(pointer)
 
     def __repr__(self) -> str:
         return f"<Lobster {self.id} at {self.position} facing {self.direction.name} in {self.domain}>"
@@ -32,3 +34,18 @@ class Lobster:
             facing = self.direction
         new_pos = self.position + Point.from_direction(where)
         return self.__class__(new_pos, facing, self.domain)
+
+    def push(self, value: int) -> None:
+        value = value & 255
+        self.stack.append(value)
+
+    def pop(self) -> int:
+        return self.stack.pop()
+
+    def peek(self) -> int:
+        return self.stack[-1]
+
+    def shift_pointer(self, offset: Point) -> Point:
+        new_pos = self.pointer + offset
+        self.pointer = self.domain.transform(new_pos)
+        return self.pointer
