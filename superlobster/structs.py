@@ -10,13 +10,18 @@ class Matrix:
 
 	def __iter__(self) -> Matrix:
 		self.__i: int = 0
-		self.__max: int = self.width * self.height
+		self.__x: int = 0
+		self.__y: int = 0
 		return self
 
 	def __next__(self):
-		if self.__i < self.__max:
-			yield self.__matrix[self.__i]
+		if self.__y < self.height:
+			yield self.__x, self.__y, self.__matrix[self.__i]
 			self.__i += 1
+			self.__x += 1
+			if self.__x >= self.width:
+				self.__x = 0
+				self.__y += 1
 		else:
 			raise StopIteration
 
