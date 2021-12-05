@@ -1,4 +1,5 @@
 import superlobster.interpreter as sl
+from superlobster.geometry import ClosedDomain
 from unittest import TestCase
 
 
@@ -18,7 +19,7 @@ class TestLobster(TestCase):
         self.assertEqual(barry.position, sl.Point(3, 4))
         self.assertIs(barry.direction, sl.Direction.SOUTH)
 
-        derek = sl.Lobster(sl.Point(10, 10), domain=sl.ClosedDomain(5, 5))
+        derek = sl.Lobster(sl.Point(10, 10), domain=ClosedDomain(5, 5))
         self.assertIsNot(derek, barry)
         self.assertNotEqual(derek, barry)
         self.assertEqual(derek.position, sl.Point(0, 0))
@@ -49,7 +50,7 @@ class TestLobster(TestCase):
         self.assertEqual(barry.position, sl.Point(0, 0))
 
     def test_movement_closed_domain(self):
-        barry = sl.Lobster(sl.Point(3, 4), sl.Direction.SOUTH, sl.ClosedDomain(5, 7))
+        barry = sl.Lobster(sl.Point(3, 4), sl.Direction.SOUTH, ClosedDomain(5, 7))
         self.assertEqual(barry.position, sl.Point(3, 4))
         barry.step(2)
         self.assertEqual(barry.position, sl.Point(3, 6))
@@ -57,7 +58,7 @@ class TestLobster(TestCase):
         self.assertEqual(barry.position, sl.Point(3, 1))
 
     def test_cloning(self):
-        barry = sl.Lobster(sl.Point(3, 4), sl.Direction.SOUTH, sl.ClosedDomain(5, 7))
+        barry = sl.Lobster(sl.Point(3, 4), sl.Direction.SOUTH, ClosedDomain(5, 7))
 
         barry2 = barry.clone()
         self.assertIsNot(barry, barry2)

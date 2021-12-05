@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import itertools
 
-from .geometry import Point, Direction, Domain, ClosedDomain
+from .geometry import Point, Direction, Domain
 
 
 class Lobster:
