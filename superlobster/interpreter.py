@@ -11,10 +11,10 @@ class Lobster:
 
     def __init__(self, position=Point(), direction=Direction.EAST, domain=Domain(), pointer=Point()) -> None:
         self.id = next(Lobster.id_iter)
-        self.position = domain.transform(position)
-        self.direction = direction
-        self.domain = domain
-        self.pointer = domain.transform(pointer)
+        self.position: Point = domain.transform(position)
+        self.direction: Direction = direction
+        self.domain: Domain = domain
+        self.pointer: Point = domain.transform(pointer)
 
     def __repr__(self) -> str:
         return f"<Lobster {self.id} at {self.position} facing {self.direction.name} in {self.domain}>"
