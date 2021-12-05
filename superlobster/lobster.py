@@ -37,6 +37,28 @@ class Lobster:
         new_pos = self.position + Point.from_direction(where)
         return self.__class__(new_pos, facing, self.domain)
 
+    def left_swap(self) -> None:
+        self.brain, self.left_claw = self.left_claw, self.brain
+
+    def right_swap(self) -> None:
+        self.brain, self.right_claw = self.right_claw, self.brain
+
+    def add(self) -> int:
+        self.brain = self.left_claw + self.right_claw
+        return self.brain
+
+    def sub(self) -> int:
+        self.brain = self.left_claw - self.right_claw
+        return self.brain
+
+    def mul(self) -> int:
+        self.brain = self.left_claw * self.right_claw
+        return self.brain
+
+    def div(self) -> int:
+        self.brain = self.left_claw // self.right_claw
+        return self.brain
+
     def shift_pointer(self, offset: Point) -> Point:
         new_pos = self.pointer + offset
         self.pointer = self.domain.transform(new_pos)
