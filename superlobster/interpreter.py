@@ -14,6 +14,9 @@ class Lobster:
         self.position: Point = domain.transform(position)
         self.direction: Direction = direction
         self.domain: Domain = domain
+        self.left_claw: int = 0
+        self.right_claw: int = 0
+        self.brain: int = 0
         self.pointer: Point = domain.transform(pointer)
 
     def __repr__(self) -> str:
