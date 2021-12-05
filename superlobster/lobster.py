@@ -3,6 +3,17 @@ from __future__ import annotations
 import itertools
 
 from .geometry import Point, Direction, Domain
+from enum import Enum, unique, auto
+
+
+@unique
+class LobsterState(Enum):
+
+    DOING = auto()
+    READ = auto()
+    PSYCHIC = auto()
+    DONE = auto()
+    HALT = auto()
 
 
 class Lobster:
@@ -14,6 +25,7 @@ class Lobster:
         self.position: Point = domain.transform(position)
         self.direction: Direction = direction
         self.domain: Domain = domain
+        self.state: LobsterState = LobsterState.DONE
         self.left_claw: int = 0
         self.right_claw: int = 0
         self.brain: int = 0
