@@ -1,4 +1,4 @@
-import superlobster.interpreter as sl
+import superlobster.lobster as sl
 from superlobster.geometry import ClosedDomain
 from unittest import TestCase
 
