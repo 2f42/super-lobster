@@ -192,7 +192,7 @@ class Lobster:
 
         # print
         elif instr == 45 or instr == 211:
-            print(self.brain)
+            print("lobster say:", self.brain)
 
         # input
         elif instr == 47 or instr == 209:
