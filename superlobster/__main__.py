@@ -1,7 +1,9 @@
 from argparse import ArgumentParser
+from .virtualmachine import VirtualMachine
+from .structs import Matrix
 
 
-def main():
+def main2():
     parser = ArgumentParser(
         prog="superlobster",
         description="SuperLobster",)
@@ -13,6 +15,16 @@ def main():
 
     args = parser.parse_args()
     print(args)
+
+
+def main():
+    img = Matrix(5, 1)
+    img.set(0, 0, 47)
+    img.set(1, 0, 2)
+    img.set(2, 0, 11)
+
+    vm = VirtualMachine(img)
+    vm.run()
 
 
 if __name__ == "__main__":
