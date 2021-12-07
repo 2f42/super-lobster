@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Tuple
 
 from dataclasses import dataclass, astuple
 from enum import Enum, unique
@@ -63,6 +64,9 @@ class Point:
             x, y = astuple(other)
             return Point(_x * x, _y * y)
         return NotImplemented
+
+    def coords(self) -> Tuple[int, int]:
+        return self.x, self.y
 
 
 @dataclass(frozen=True)
