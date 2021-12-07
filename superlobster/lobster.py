@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Generator
 
 import itertools
 
@@ -79,3 +80,120 @@ class Lobster:
         new_pos = self.pointer + offset
         self.pointer = self.domain.transform(new_pos)
         return self.pointer
+
+    def update(self) -> Generator[LobsterState, int, None]:
+        # fetch-decode-execute
+
+        # fetch
+        fetch = yield LobsterState.FETCH
+
+        # decode
+        decoded = (fetch - self.last_fetch) & 255  # fit in 8 bits
+        self.last_fetch = fetch
+        is_instr = (decoded & 1)  # is last bit set?
+
+        # execute
+        if not is_instr:
+            self.brain = self.last_fetch
+        else:
+            yield from self.execute(decoded)
+
+        # increment program counter
+        self.step()
+
+    def execute(self, instr: int) -> Generator[LobsterState, int, None]:
+        # oh boy this is gonna be a decently sized function
+
+        # no-op
+        if instr <= 7 or instr >= 249:
+            pass
+
+        # halt
+        elif instr == 9 or instr == 247:
+            print("halting!")
+            yield LobsterState.HALT
+
+        # left swap
+        elif instr == 11 or instr == 245:
+            self.left_swap()
+
+        # right swap
+        elif instr == 13 or instr == 243:
+            self.right_swap()
+
+        # add
+        elif instr == 15 or instr == 241:
+            self.add()
+
+        # subtract
+        elif instr == 17 or instr == 239:
+            self.sub()
+
+        # multiply
+        elif instr == 19 or instr == 237:
+            self.mul()
+
+        # divide
+        elif instr == 21 or instr == 235:
+            self.div()
+
+        # read from pointer
+        elif instr == 23 or instr == 233:
+            self.brain = yield LobsterState.READ
+
+        # write to pointer
+        elif instr == 25 or instr == 231:
+            yield LobsterState.WRITE
+
+        # shift pointer by x, y (2 reads)
+        elif instr == 27 or instr == 229:
+            self.step()
+            x_offs = yield LobsterState.FETCH
+            self.step()
+            y_offs = yield LobsterState.FETCH
+            self.shift_pointer(Point(x_offs, y_offs))
+
+        # write to next position
+        elif instr == 29 or instr == 227:
+            self.step()
+            yield LobsterState.MODIFY
+
+        # turn left (counter-clockwise)
+        elif instr == 31 or instr == 225:
+            self.turn(-1)
+
+        # turn right (clockwise)
+        elif instr == 33 or instr == 223:
+            self.turn(1)
+
+        # turn left if 0
+        elif instr == 35 or instr == 221:
+            if not self.brain:
+                self.turn(-1)
+
+        # turn right if 0
+        elif instr == 37 or instr == 219:
+            if not self.brain:
+                self.turn(1)
+
+        # turn left if not 0
+        elif instr == 39 or instr == 217:
+            if self.brain:
+                self.turn(-1)
+
+        # turn right if not 0
+        elif instr == 41 or instr == 215:
+            if self.brain:
+                self.turn(1)
+
+        # clone
+        elif instr == 43 or instr == 213:
+            yield LobsterState.CLONE
+
+        # print
+        elif instr == 45 or instr == 211:
+            print(self.brain)
+
+        # input
+        elif instr == 47 or instr == 209:
+            self.brain = int(input("> "))
