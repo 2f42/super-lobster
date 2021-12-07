@@ -9,11 +9,13 @@ from enum import Enum, unique, auto
 @unique
 class LobsterState(Enum):
 
-    DOING = auto()
-    READ = auto()
-    PSYCHIC = auto()
-    DONE = auto()
-    HALT = auto()
+    HALT = auto()    # no longer running
+    DONE = auto()    # ready for next step
+    FETCH = auto()   # read from current position
+    READ = auto()    # read from pointer
+    MODIFY = auto()  # write to current position
+    WRITE = auto()   # write to pointer
+    CLONE = auto()   # lobster cloning go brrr
 
 
 class Lobster:
@@ -25,10 +27,10 @@ class Lobster:
         self.position: Point = domain.transform(position)
         self.direction: Direction = direction
         self.domain: Domain = domain
-        self.state: LobsterState = LobsterState.DONE
         self.left_claw: int = 0
         self.right_claw: int = 0
         self.brain: int = 0
+        self.last_fetch: int = 0
         self.pointer: Point = domain.transform(pointer)
 
     def __repr__(self) -> str:
