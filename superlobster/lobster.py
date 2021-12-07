@@ -110,7 +110,6 @@ class Lobster:
 
         # halt
         elif instr == 9 or instr == 247:
-            print("halting!")
             yield LobsterState.HALT
 
         # left swap

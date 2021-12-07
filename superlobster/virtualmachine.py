@@ -26,7 +26,6 @@ class VirtualMachine:
                 while True:
                     x, y = lobster.position.coords()
                     _x, _y = lobster.pointer.coords()
-                    print(state.name)
 
                     if state is LobsterState.HALT:
                         scheduled_for_annihilation.append(lob_id)
