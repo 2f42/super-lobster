@@ -24,7 +24,7 @@ class Matrix:
                 self.__x = 0
                 self.__y += 1
         else:
-            raise StopIteration
+            return
 
     @property
     def width(self) -> int:
